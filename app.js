@@ -3,10 +3,14 @@ var app = module.exports = express.createServer();
 var stdin = process.stdin;
 
 var clients = new Array();
-var msg=["H","O","L","A"," "];
-var i=0, k=0;
+var i=0, k=0, m=0;
 var flag=true;
 var way=true;
+
+// Parameters
+var msg="HI TESTING ";
+var timeColor=200;
+var timeMsg=800;
 
 // Handle type
 stdin.resume();
@@ -33,13 +37,17 @@ stdin.on('data', function() {
           way=true;
         }
       }
-    }, 200);
+    }, timeColor);
     setInterval(function(){
-        if(k<clients.length && k<msg.length) {
-          clients[k].emit('letter', {string: msg[k]}); 
-          k++;
+    if(m<clients.length) {
+        if(k<msg.length) {
+            clients[m].emit('letter', {string: msg[k]}); 
+            m++; k++;
+          } else {
+            k=0;
+          }
         }
-    }, 800);    
+    }, timeMsg);
   }
 });
 
